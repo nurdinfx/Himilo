@@ -1,5 +1,4 @@
-const path = require('path');
-const { Hotel, Room, Bed } = require(path.join(__dirname, '../../database/index.js'));
+const { Hotel, Room, Bed } = require('../database/index.js');
 
 // @desc    Get all hotels
 // @route   GET /api/hotels

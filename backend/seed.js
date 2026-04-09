@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-const { connectDB, User, Hotel, Room, Bed, Booking, CustomerInfo } = require(path.join(__dirname, '../database/index.js'));
+const { connectDB, User, Hotel, Room, Bed, Booking, CustomerInfo } = require('./database/index.js');
 const bcrypt = require('bcryptjs');
 
 dotenv.config();

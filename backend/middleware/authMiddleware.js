@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const { User } = require(path.join(__dirname, '../../database/index.js'));
+const { User } = require('../database/index.js');
 
 const protect = async (req, res, next) => {
   let token;

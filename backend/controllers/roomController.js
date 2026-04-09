@@ -1,5 +1,5 @@
 const path = require('path');
-const { Room, Hotel, Bed } = require(path.join(__dirname, '../../database/index.js'));
+const { Room, Hotel, Bed } = require('../database/index.js');
 
 // @desc    Get all rooms (can filter by hotelId)
 // @route   GET /api/rooms

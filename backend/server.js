@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 // Using path to get models from sister directory
 const path = require('path');
-const { connectDB } = require(path.join(__dirname, '../database/index.js'));
+const { connectDB } = require('./database/index.js');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 dotenv.config();

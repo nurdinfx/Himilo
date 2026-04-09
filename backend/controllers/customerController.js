@@ -1,5 +1,5 @@
 const path = require('path');
-const { CustomerInfo } = require(path.join(__dirname, '../../database/index.js'));
+const { CustomerInfo } = require('../database/index.js');
 
 // @desc    Get all customers
 // @route   GET /api/customers

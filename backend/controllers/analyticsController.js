@@ -1,8 +1,8 @@
-const Booking = require('../../database/models/Booking');
-const User = require('../../database/models/User');
-const Room = require('../../database/models/Room');
-const Bed = require('../../database/models/Bed');
-const CustomerInfo = require('../../database/models/CustomerInfo');
+const Booking = require('../database/models/Booking');
+const User = require('../database/models/User');
+const Room = require('../database/models/Room');
+const Bed = require('../database/models/Bed');
+const CustomerInfo = require('../database/models/CustomerInfo');
 
 const getDashboardStats = async (req, res) => {
   try {

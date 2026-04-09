@@ -1,5 +1,5 @@
 const path = require('path');
-const { Booking, Room, Bed, CustomerInfo } = require(path.join(__dirname, '../../database/index.js'));
+const { Booking, Room, Bed, CustomerInfo } = require('../database/index.js');
 
 // @desc    Create new booking
 // @route   POST /api/bookings

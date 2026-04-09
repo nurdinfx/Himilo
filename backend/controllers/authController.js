@@ -1,5 +1,5 @@
 const path = require('path');
-const { User } = require(path.join(__dirname, '../../database/index.js'));
+const { User } = require('../database/index.js');
 const generateToken = require('../utils/generateToken');
 
 // @desc    Auth user & get token
