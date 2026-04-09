@@ -18,8 +18,18 @@ const getDashboardStats = async (req, res) => {
       .limit(5)
       .populate('hotelId', 'name')
       .populate('roomId', 'type price')
-      .populate('userId', 'name')
-      .populate('customerInfo');
+      .populate('userId', 'name');
+
+    // Fetch customer info manually since it's not a direct ref on Booking
+    const recentBookingsWithCustomer = await Promise.all(
+      recentBookings.map(async (b) => {
+        const customerInfo = await CustomerInfo.findOne({ bookingId: b._id });
+        return {
+          ...b.toObject(),
+          customerInfo
+        };
+      })
+    );
 
     // 4. Calculate Total Revenue & Occupancy
     // For revenue, sum up the price of the rooms for confirmed/completed bookings
@@ -41,7 +51,8 @@ const getDashboardStats = async (req, res) => {
       activeBookings,
       totalCustomers,
       occupancyRate,
-      recentBookings
+      occupancyRate,
+      recentBookings: recentBookingsWithCustomer
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -64,7 +64,7 @@ const RoomModal = ({ hotels, onClose, onSaved, initialData }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5">Room Image URL (Optional)</label>
-            <input type="url" value={form.image} onChange={e => setForm({...form, image: e.target.value})}
+            <input type="text" value={form.image} onChange={e => setForm({...form, image: e.target.value})}
               className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
               placeholder="https://images.unsplash.com/photo-1590490360182-c33d57733427..." />
           </div>
@@ -227,10 +227,9 @@ const Rooms = () => {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100">
                       {room.image ? (
-                        <img src={room.image} alt={room.type} className="w-full h-full object-cover" />
-                      ) : (
-                        <BedDouble className="w-6 h-6 text-blue-500" />
-                      )}
+                        <img src={room.image} alt={room.type} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+                      ) : null}
+                      <BedDouble className={`w-6 h-6 text-blue-500 ${room.image ? 'hidden' : ''}`} />
                     </div>
                     <div>
                       <div className="flex items-center gap-3">

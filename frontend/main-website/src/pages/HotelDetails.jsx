@@ -236,10 +236,9 @@ const HotelDetails = () => {
                   <div key={room._id} className="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-8 group">
                       <div className="bg-slate-100 rounded-[1.5rem] h-48 md:h-auto w-full md:w-64 flex items-center justify-center overflow-hidden border border-slate-100 shrink-0">
                           {room.image ? (
-                             <img src={room.image} alt={`${room.type} room`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                          ) : (
-                             <BedDouble className="w-12 h-12 text-slate-300" />
-                          )}
+                             <img src={room.image} alt={`${room.type} room`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
+                          ) : null}
+                          <BedDouble className={`w-12 h-12 text-slate-300 ${room.image ? 'hidden' : ''}`} />
                       </div>
                       <div className="flex-1 flex flex-col pt-2">
                           <div className="flex justify-between items-start mb-6">
