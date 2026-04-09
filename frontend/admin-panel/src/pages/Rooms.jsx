@@ -19,6 +19,29 @@ const RoomModal = ({ hotels, onClose, onSaved, initialData }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new window.Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const scaleSize = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scaleSize;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const base64Str = canvas.toDataURL('image/jpeg', 0.7);
+          setForm({ ...form, image: base64Str });
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); setLoading(true); setError('');
     try {
@@ -63,10 +86,10 @@ const RoomModal = ({ hotels, onClose, onSaved, initialData }) => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Room Image URL (Optional)</label>
-            <input type="text" value={form.image} onChange={e => setForm({...form, image: e.target.value})}
-              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
-              placeholder="https://images.unsplash.com/photo-1590490360182-c33d57733427..." />
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Room Image (Upload File)</label>
+            <input type="file" accept="image/*" onChange={handleImageUpload}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white" />
+            {form.image && <p className="text-xs text-green-600 mt-2 font-medium">Image optimized and attached successfully!</p>}
           </div>
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 px-4 py-3 border border-slate-200 rounded-xl font-medium text-slate-600 hover:bg-slate-50">Cancel</button>

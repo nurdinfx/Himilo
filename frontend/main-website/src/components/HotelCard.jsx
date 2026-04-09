@@ -9,6 +9,7 @@ const HotelCard = ({ hotel }) => {
           src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800'} 
           alt={hotel.name} 
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200'; }}
         />
         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center space-x-1 shadow-sm">
           <Star className="w-4 h-4 text-accent fill-accent" />

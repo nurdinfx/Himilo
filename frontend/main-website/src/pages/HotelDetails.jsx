@@ -203,6 +203,7 @@ const HotelDetails = () => {
           src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80'} 
           alt={hotel.name}
           className="w-full h-full object-cover opacity-60 mix-blend-overlay"
+          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200'; }}
         />
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900 to-transparent pt-32 pb-12 px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
