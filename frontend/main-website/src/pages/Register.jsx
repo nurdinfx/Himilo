@@ -1,28 +1,25 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { UserCircle2, KeyRound } from 'lucide-react';
+import { UserCircle2, KeyRound, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${API}/auth/login`, { email, password });
-      // In a real app we would save this to Context/Zustand and localStorage
+      const { data } = await axios.post(`${API}/auth/register`, { name, email, password });
       localStorage.setItem('userInfo', JSON.stringify(data));
-      
-      const searchParams = new URLSearchParams(window.location.search);
-      const redirect = searchParams.get('redirect') || '/';
-      navigate(redirect);
+      navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid Email or Password');
+      setError(err.response?.data?.message || 'Failed to register account');
     }
   };
 
@@ -30,8 +27,8 @@ const Login = () => {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 pt-20">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 p-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-slate-900 mb-2">Welcome Back</h2>
-          <p className="text-slate-500">Sign in to your Himilo account</p>
+          <h2 className="text-3xl font-bold text-slate-900 mb-2">Create Account</h2>
+          <p className="text-slate-500">Join Himilo Hotel to book your stay</p>
         </div>
 
         {error && (
@@ -40,11 +37,25 @@ const Login = () => {
             </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleRegister} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
+            <div className="relative">
+              <UserCircle2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input 
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+          </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
             <div className="relative">
-              <UserCircle2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input 
                 type="email" 
                 value={email}
@@ -66,6 +77,7 @@ const Login = () => {
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all"
                 placeholder="••••••••"
                 required
+                minLength="6"
               />
             </div>
           </div>
@@ -74,16 +86,16 @@ const Login = () => {
             type="submit" 
             className="w-full bg-primary hover:bg-primary-light text-white font-bold py-3.5 rounded-xl transition-all shadow-md active:scale-95"
           >
-            Sign In
+            Create Account
           </button>
         </form>
 
         <div className="mt-8 text-center text-sm text-slate-500">
-          Don't have an account? <span onClick={() => navigate('/register')} className="text-accent font-semibold hover:underline cursor-pointer">Register now</span>
+          Already have an account? <span onClick={() => navigate('/login')} className="text-accent font-semibold hover:underline cursor-pointer">Sign in</span>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;

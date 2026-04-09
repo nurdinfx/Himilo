@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MapPin, CheckCircle2, BedDouble, X, CalendarDays, User, Mail, Phone } from 'lucide-react';
+
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -34,6 +35,13 @@ const BookingModal = ({ room, hotel, onClose, onSuccess }) => {
     }
     setLoading(true); setError('');
     try {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      };
+
       await axios.post(`${API}/bookings`, {
         hotelId: hotel._id,
         roomId: room._id,
@@ -42,9 +50,9 @@ const BookingModal = ({ room, hotel, onClose, onSuccess }) => {
         customerInfo: {
           fullName: form.fullName,
           email: form.email,
-          phone: form.phone,
+          phoneNumber: form.phone,
         }
-      });
+      }, config);
       onSuccess();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to complete booking. Please try again.');
@@ -156,6 +164,16 @@ const HotelDetails = () => {
   const [rooms, setRooms] = useState([]);
   const [bookingRoom, setBookingRoom] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBookClick = (room) => {
+    const userInfo = localStorage.getItem('userInfo');
+    if (!userInfo) {
+      navigate(`/login?redirect=/hotel/${id}`);
+      return;
+    }
+    setBookingRoom(room);
+  };
 
   useEffect(() => {
     const fetchHotelAndRooms = async () => {
@@ -245,7 +263,7 @@ const HotelDetails = () => {
                           </div>
 
                           <div className="mt-auto">
-                              <button onClick={() => setBookingRoom(room)} className="w-full md:w-auto px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-colors shadow-lg hover:shadow-xl active:scale-95">
+                              <button onClick={() => handleBookClick(room)} className="w-full md:w-auto px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-colors shadow-lg hover:shadow-xl active:scale-95">
                                   Select & Book Room
                               </button>
                           </div>

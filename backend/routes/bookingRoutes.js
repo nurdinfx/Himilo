@@ -10,7 +10,7 @@ const { protect, staff } = require('../middleware/authMiddleware');
 
 router.route('/')
   .get(protect, staff, getBookings)
-  .post(createBooking);
+  .post(protect, createBooking);
 
 router.route('/mybookings').get(protect, getMyBookings);
 
