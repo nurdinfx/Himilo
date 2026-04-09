@@ -3,6 +3,8 @@ import axios from 'axios';
 import { UserCircle2, KeyRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +14,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { data } = await axios.post(`${API}/auth/login`, { email, password });
       // In a real app we would save this to Context/Zustand and localStorage
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate('/');

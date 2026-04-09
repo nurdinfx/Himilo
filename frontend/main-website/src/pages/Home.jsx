@@ -3,13 +3,15 @@ import axios from 'axios';
 import { Search, CalendarDays } from 'lucide-react';
 import HotelCard from '../components/HotelCard';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const Home = () => {
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/hotels');
+        const { data } = await axios.get(`${API}/hotels`);
         setHotels(data);
       } catch (error) {
         console.error('Failed to fetch hotels', error);

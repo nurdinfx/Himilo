@@ -3,6 +3,8 @@ import axios from 'axios';
 import { TrendingUp, Users, CalendarCheck, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const StatCard = ({ title, value, icon: Icon, trend }) => (
   <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between group hover:shadow-md transition-all">
     <div>
@@ -35,7 +37,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('adminInfo'))?.token;
-        const { data } = await axios.get('http://localhost:5000/api/analytics/dashboard', {
+        const { data } = await axios.get(`${API}/analytics/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(data);
