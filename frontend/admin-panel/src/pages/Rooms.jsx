@@ -215,18 +215,18 @@ const Rooms = () => {
       {showRoomModal && <RoomModal hotels={hotels} initialData={editingRoom} onClose={() => { setShowRoomModal(false); setEditingRoom(null); }} onSaved={() => { setShowRoomModal(false); setEditingRoom(null); fetchAll(); }} />}
       {showBedModal && <BedModal rooms={rooms} onClose={() => setShowBedModal(false)} onSaved={() => { setShowBedModal(false); fetchAll(); }} />}
 
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Rooms & Beds</h1>
-          <p className="text-slate-500 mt-1">Manage rooms and individual beds across all properties</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-900">Rooms & Beds</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage rooms and individual beds across all properties</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2 w-full sm:w-auto">
           <button onClick={() => setShowBedModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl transition-colors text-sm">
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2.5 border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-xl transition-colors text-xs md:text-sm">
             <Plus className="w-4 h-4" /> Add Beds
           </button>
           <button onClick={() => { setEditingRoom(null); setShowRoomModal(true); }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm text-sm">
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm text-xs md:text-sm">
             <Plus className="w-4 h-4" /> Add Room
           </button>
         </div>
@@ -246,44 +246,47 @@ const Rooms = () => {
             const isExpanded = expandedRoom === room._id;
             return (
               <div key={room._id} className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-6 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100">
+                <div className="p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 flex-shrink-0">
                       {room.image ? (
                         <img src={room.image} alt={room.type} className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }} />
                       ) : null}
-                      <BedDouble className={`w-6 h-6 text-blue-500 ${room.image ? 'hidden' : ''}`} />
+                      <BedDouble className={`w-5 h-5 md:w-6 md:h-6 text-blue-500 ${room.image ? 'hidden' : ''}`} />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <h3 className="font-bold text-slate-900 capitalize">{room.type} Room</h3>
-                        <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">Capacity: {room.capacity}</span>
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-bold text-slate-900 capitalize truncate">{room.type} Room</h3>
+                        <span className="text-[10px] md:text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Cap: {room.capacity}</span>
                       </div>
-                      <p className="text-sm text-slate-500 mt-0.5">{room.hotelId?.name || 'Unknown Hotel'}</p>
+                      <p className="text-xs md:text-sm text-slate-500 mt-0.5 truncate">{room.hotelId?.name || 'Unknown Hotel'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 ml-auto">
-                    <div className="text-right mr-2">
-                      <p className="text-xl font-bold text-slate-900">${room.price}<span className="text-sm font-normal text-slate-400">/night</span></p>
-                      <p className="text-xs text-slate-500">{roomBeds.length} beds total · {roomBeds.filter(b => b.status === 'available').length} available</p>
+                  <div className="flex items-center justify-between md:justify-end gap-3 md:gap-4 md:ml-auto pt-4 md:pt-0 border-t border-slate-50 md:border-none">
+                    <div className="text-left md:text-right mr-2 flex-grow md:flex-grow-0">
+                      <p className="text-lg md:text-xl font-bold text-slate-900">${room.price}<span className="text-xs md:text-sm font-normal text-slate-400">/night</span></p>
+                      <p className="text-[10px] md:text-xs text-slate-500">{roomBeds.length} beds · {roomBeds.filter(b => b.status === 'available').length} free</p>
                     </div>
                     
-                    <button onClick={() => setExpandedRoom(isExpanded ? null : room._id)}
-                      className="p-2 hover:bg-slate-100 rounded-xl transition-colors outline-none" title="View Beds">
-                      <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    <button onClick={() => handleEditRoom(room)}
-                      className="p-2 hover:bg-slate-100 hover:text-blue-600 text-slate-400 rounded-xl transition-colors outline-none" title="Edit Room">
-                      <Edit className="w-4 h-4" />
-                    </button>
+                    <div className="flex gap-1 md:gap-2">
+                      <button onClick={() => setExpandedRoom(isExpanded ? null : room._id)}
+                        className="p-2 hover:bg-slate-100 rounded-xl transition-colors outline-none border border-slate-100 md:border-none" title="View Beds">
+                        <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
+                      
+                      <button onClick={() => handleEditRoom(room)}
+                        className="p-2 hover:bg-slate-100 hover:text-blue-600 text-slate-400 rounded-xl transition-colors outline-none border border-slate-100 md:border-none" title="Edit Room">
+                        <Edit className="w-4 h-4" />
+                      </button>
 
-                    <button onClick={() => handleDeleteRoom(room._id)}
-                      className="p-2 hover:bg-red-50 hover:text-red-600 text-slate-400 rounded-xl transition-colors outline-none" title="Delete Room">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                      <button onClick={() => handleDeleteRoom(room._id)}
+                        className="p-2 hover:bg-red-50 hover:text-red-600 text-slate-400 rounded-xl transition-colors outline-none border border-slate-100 md:border-none" title="Delete Room">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+
 
                 {isExpanded && (
                   <div className="border-t border-slate-100 p-6 bg-slate-50/50">

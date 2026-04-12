@@ -14,6 +14,7 @@ function App() {
     const saved = localStorage.getItem('adminInfo');
     return saved ? JSON.parse(saved) : null;
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogin = (info) => setAdminInfo(info);
 
@@ -27,11 +28,20 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex font-sans text-slate-800 selection:bg-blue-500 selection:text-white">
-      <Sidebar onLogout={handleLogout} adminInfo={adminInfo} />
+    <div className="min-h-screen bg-slate-50 flex font-sans text-slate-800 selection:bg-blue-500 selection:text-white relative">
+      <Sidebar 
+        onLogout={handleLogout} 
+        adminInfo={adminInfo} 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
+      
       <div className="flex-1 flex flex-col min-w-0">
-        <Topbar adminInfo={adminInfo} />
-        <main className="flex-1 p-8 overflow-y-auto">
+        <Topbar 
+          adminInfo={adminInfo} 
+          onMenuClick={() => setIsSidebarOpen(true)} 
+        />
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/hotels" element={<Hotels />} />
@@ -42,8 +52,17 @@ function App() {
           </Routes>
         </main>
       </div>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
     </div>
   )
 }
 
 export default App
+

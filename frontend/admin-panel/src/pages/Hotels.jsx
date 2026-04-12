@@ -197,18 +197,19 @@ const Hotels = () => {
         <HotelModal hotel={editHotel} onClose={handleModalClose} onSaved={handleSaved} />
       )}
 
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Hotels Management</h1>
-          <p className="text-slate-500 mt-1">Manage all your hotel properties</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-900">Hotels Management</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage all your hotel properties</p>
         </div>
         <button
           onClick={() => { setEditHotel(null); setShowModal(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm text-sm"
         >
           <Plus className="w-4 h-4" /> Add Hotel
         </button>
       </div>
+
 
       {loading ? (
         <div className="text-center py-20 text-slate-400 font-medium">Loading hotels...</div>

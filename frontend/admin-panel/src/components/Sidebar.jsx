@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Building2, Bed, CalendarCheck, Users, LogOut } from 'lucide-react';
+import { LayoutDashboard, Building2, Bed, CalendarCheck, Users, LogOut, X } from 'lucide-react';
 
-const Sidebar = ({ onLogout, adminInfo }) => {
+const Sidebar = ({ onLogout, adminInfo, isOpen, onClose }) => {
   const location = useLocation();
 
   const links = [
@@ -12,12 +12,23 @@ const Sidebar = ({ onLogout, adminInfo }) => {
   ];
 
   return (
-    <aside className="w-64 bg-admin-dark text-slate-300 flex flex-col h-screen sticky top-0 border-r border-slate-700 shadow-xl">
-      <div className="h-20 flex items-center px-6 border-b border-slate-700/50 bg-slate-900/50">
+    <aside className={`
+      fixed md:sticky top-0 left-0 z-40 w-64 h-screen 
+      bg-admin-dark text-slate-300 flex flex-col 
+      border-r border-slate-700 shadow-xl transition-transform duration-300 ease-in-out
+      ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+    `}>
+      <div className="h-20 flex items-center justify-between px-6 border-b border-slate-700/50 bg-slate-900/50">
         <div className="flex items-center space-x-2 text-white">
           <Building2 className="w-8 h-8 text-admin-accent" />
           <span className="text-xl font-bold tracking-wide">Himilo Admin</span>
         </div>
+        <button 
+          onClick={onClose}
+          className="md:hidden p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
@@ -29,6 +40,7 @@ const Sidebar = ({ onLogout, adminInfo }) => {
             <Link
               key={link.name}
               to={link.path}
+              onClick={() => { if (window.innerWidth < 768) onClose(); }}
               className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
                 isActive 
                   ? 'bg-admin-accent/10 text-admin-accent font-medium shadow-inner' 
@@ -53,3 +65,4 @@ const Sidebar = ({ onLogout, adminInfo }) => {
 };
 
 export default Sidebar;
+
