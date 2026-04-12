@@ -5,7 +5,7 @@ import { RefreshCw, X } from 'lucide-react'
 function ReloadPrompt() {
   const {
     offlineReady: [offlineReady, setOfflineReady],
-    needUpdate: [needUpdate, setNeedUpdate],
+    needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
@@ -18,10 +18,10 @@ function ReloadPrompt() {
 
   const close = () => {
     setOfflineReady(false)
-    setNeedUpdate(false)
+    setNeedRefresh(false)
   }
 
-  if (!offlineReady && !needUpdate) return null;
+  if (!offlineReady && !needRefresh) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] p-5 bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 flex flex-col gap-5 animate-in slide-in-from-bottom duration-500 max-w-sm">
@@ -38,7 +38,7 @@ function ReloadPrompt() {
           <X className="w-5 h-5" />
         </button>
       </div>
-      {needUpdate && (
+      {needRefresh && (
         <button
           onClick={() => updateServiceWorker(true)}
           className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-white rounded-2xl font-bold transition-all shadow-xl active:scale-95 text-base"
