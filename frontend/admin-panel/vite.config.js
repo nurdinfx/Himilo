@@ -48,6 +48,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true
+      },
+      devOptions: {
+        enabled: true,
+        type: 'module'
       }
     })
   ],
