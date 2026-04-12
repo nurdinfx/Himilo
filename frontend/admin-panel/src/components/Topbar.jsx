@@ -1,4 +1,5 @@
 import { Bell, Search, Menu } from 'lucide-react';
+import InstallPWA from './InstallPWA';
 
 const Topbar = ({ adminInfo, onMenuClick }) => {
   return (
@@ -23,6 +24,7 @@ const Topbar = ({ adminInfo, onMenuClick }) => {
       </div>
 
       <div className="flex items-center space-x-3 md:space-x-6">
+        <InstallPWA />
         <button className="relative text-slate-400 hover:text-slate-600 transition-colors p-2">
           <Bell className="w-5 h-5" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>

@@ -78,20 +78,20 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-        <div className="lg:col-span-2 bg-white p-4 md:p-8 rounded-3xl border border-slate-100 shadow-sm">
+        <div className="lg:col-span-2 bg-white p-4 md:p-8 rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
            <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-bold text-slate-900">Recent Bookings</h3>
               <Link to="/bookings" className="text-admin-accent text-sm font-semibold hover:underline">View All</Link>
            </div>
            
            <div className="overflow-x-auto -mx-4 md:mx-0">
-             <table className="w-full text-left border-collapse min-w-[500px] md:min-w-0">
+             <table className="w-full text-left border-collapse min-w-[600px] md:min-w-0">
                <thead>
                  <tr className="border-b border-slate-100 text-sm font-medium text-slate-500">
                    <th className="pb-3 px-4 font-medium">Guest Name</th>
                    <th className="pb-3 px-4 font-medium">Room</th>
                    <th className="pb-3 px-4 font-medium hidden md:table-cell">Dates</th>
-                   <th className="pb-3 px-4 font-medium">Status</th>
+                   <th className="pb-3 px-4 font-medium text-right">Status</th>
                  </tr>
                </thead>
                <tbody className="text-sm">
@@ -104,7 +104,7 @@ const Dashboard = () => {
                    <tr key={booking._id} className="border-b border-slate-50/50 hover:bg-slate-50/50 transition-colors">
                      <td className="py-4 px-4 font-medium text-slate-900">
                        <div className="flex flex-col">
-                         <span>{booking.customerInfo ? booking.customerInfo.fullName : booking.userId?.name || 'Guest'}</span>
+                         <span className="truncate max-w-[120px] sm:max-w-none">{booking.customerInfo ? booking.customerInfo.fullName : booking.userId?.name || 'Guest'}</span>
                          <span className="text-[10px] text-slate-400 md:hidden">{formatDate(booking.checkInDate)} - {formatDate(booking.checkOutDate)}</span>
                        </div>
                      </td>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                      <td className="py-4 px-4 text-slate-500 hidden md:table-cell">
                        {formatDate(booking.checkInDate)} - {formatDate(booking.checkOutDate)}
                      </td>
-                     <td className="py-4 px-4">
+                     <td className="py-4 px-4 text-right">
                        <span className={`inline-flex items-center px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium ${  
                          booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                          booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
@@ -134,11 +134,11 @@ const Dashboard = () => {
         
         <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm h-fit">
           <h3 className="text-lg font-bold text-slate-900 mb-6">Quick Actions</h3>
-          <div className="space-y-3">
-             <Link to="/rooms" className="block w-full text-left px-4 py-3 bg-slate-50 hover:bg-admin-accent/10 hover:text-admin-accent rounded-xl font-medium transition-colors border border-slate-100 text-sm md:text-base">
+          <div className="flex flex-col gap-3">
+             <Link to="/rooms" className="flex items-center justify-center sm:justify-start w-full px-4 py-3 bg-slate-50 hover:bg-admin-accent/10 hover:text-admin-accent rounded-xl font-medium transition-colors border border-slate-100 text-sm md:text-base">
                  + Register New Room
              </Link>
-             <button className="w-full text-left px-4 py-3 bg-slate-50 hover:bg-admin-accent/5 hover:text-admin-accent rounded-xl font-medium transition-colors border border-slate-100 text-slate-500 text-sm md:text-base">
+             <button className="flex items-center justify-center sm:justify-start w-full px-4 py-3 bg-slate-50 hover:bg-admin-accent/5 hover:text-admin-accent rounded-xl font-medium transition-colors border border-slate-100 text-slate-500 text-sm md:text-base">
                  Generate Reports (Soon)
              </button>
           </div>

@@ -8,6 +8,7 @@ import Rooms from './pages/Rooms'
 import Bookings from './pages/Bookings'
 import Customers from './pages/Customers'
 import AdminLogin from './pages/AdminLogin'
+import ReloadPrompt from './components/ReloadPrompt'
 
 function App() {
   const [adminInfo, setAdminInfo] = useState(() => {
@@ -60,9 +61,9 @@ function App() {
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
+      <ReloadPrompt />
     </div>
   )
 }
 
 export default App
-

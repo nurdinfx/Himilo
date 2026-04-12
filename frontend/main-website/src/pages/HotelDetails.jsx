@@ -64,12 +64,12 @@ const BookingModal = ({ room, hotel, onClose, onSuccess }) => {
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+        <div className="p-5 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 sticky top-0 z-20">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">Complete Your Booking</h2>
-            <p className="text-sm text-slate-500 font-medium mt-1">{room.type.charAt(0).toUpperCase() + room.type.slice(1)} Room at {hotel.name}</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">Complete Your Booking</h2>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">{room.type.charAt(0).toUpperCase() + room.type.slice(1)} Room at {hotel.name}</p>
           </div>
-          <button onClick={onClose} className="p-3 hover:bg-slate-200 rounded-full transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
+          <button onClick={onClose} className="p-2 sm:p-3 hover:bg-slate-200 rounded-full transition-colors"><X className="w-5 h-5 text-slate-500" /></button>
         </div>
 
         <div className="p-6 overflow-y-auto flex-1">
@@ -128,13 +128,13 @@ const BookingModal = ({ room, hotel, onClose, onSuccess }) => {
           </form>
         </div>
 
-        <div className="p-6 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Total Amount</p>
-            <p className="text-3xl font-extrabold text-slate-900">${totalAmount} <span className="text-sm font-medium text-slate-500 lowercase">for {days} nights</span></p>
+        <div className="p-5 sm:p-6 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-0 z-20">
+          <div className="text-center sm:text-left">
+            <p className="text-[10px] sm:text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Total Amount</p>
+            <p className="text-2xl sm:text-3xl font-extrabold text-slate-900">${totalAmount} <span className="text-xs sm:text-sm font-medium text-slate-500 lowercase">for {days} nights</span></p>
           </div>
           <button type="submit" form="booking-form" disabled={loading}
-            className="px-10 py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-colors shadow-xl disabled:opacity-50">
+            className="w-full sm:w-auto px-10 py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-colors shadow-xl disabled:opacity-50">
             {loading ? 'Confirming...' : 'Confirm Booking'}
           </button>
         </div>
@@ -205,11 +205,11 @@ const HotelDetails = () => {
           className="w-full h-full object-cover opacity-60 mix-blend-overlay"
           onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200'; }}
         />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900 to-transparent pt-32 pb-12 px-6 lg:px-8">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pt-32 pb-8 px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">{hotel.name}</h1>
-            <div className="flex items-center text-slate-300 font-medium text-lg bg-slate-900/40 backdrop-blur-sm w-fit px-4 py-2 rounded-full">
-              <MapPin className="w-5 h-5 mr-2 text-accent" />
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight leading-tight">{hotel.name}</h1>
+            <div className="flex items-center text-slate-300 font-semibold text-sm sm:text-base bg-white/10 backdrop-blur-md w-fit px-4 py-2 rounded-full border border-white/20">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent" />
               {hotel.location}
             </div>
           </div>

@@ -14,6 +14,9 @@ export default defineConfig({
         short_name: 'Himilo Admin',
         description: 'Admin Management System for Himilo Hotel',
         theme_color: '#1e3a8a',
+        background_color: '#f8fafc',
+        display: 'standalone',
+        orientation: 'portrait-primary',
         icons: [
           {
             src: 'pwa-192x192.png',

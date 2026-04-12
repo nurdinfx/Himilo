@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import HotelDetails from './pages/HotelDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ReloadPrompt from './components/ReloadPrompt'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       </main>
 
       <Footer />
+      <ReloadPrompt />
     </div>
   )
 }
